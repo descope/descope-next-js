@@ -54,35 +54,6 @@ jobs:
       - name: Format check
         run: npm run format-check
 
-  testing:
-    name: 👔 Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          registry-url: https://npm.pkg.github.com/
-      # Skip post-install scripts here, as a malicious
-      # script could steal NODE_AUTH_TOKEN.
-      - name: Install dependencies
-        run: npm ci --ignore-scripts
-        env:
-          CI: true
-          NODE_AUTH_TOKEN: ${{ secrets.CI_NPM_READ_ORG }}
-      # `npm rebuild` will run all those post-install scripts for us.
-      - run: npm rebuild && npm run prepare --if-present
-      - name: Testing
-        run: npm run test
-      - name: Coverage check
-        uses: devmasx/coverage-check-action@v1.2.0
-        with:
-          type: lcov
-          min_coverage: 95
-          result_path: coverage/lcov.info
-          token: ${{ github.token }}
-
   license-validation:
     name: 🪪 License Validation
     runs-on: ubuntu-latest

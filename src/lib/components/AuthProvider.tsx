@@ -7,7 +7,6 @@ import dynamic from 'next/dynamic';
 import AuthContext from '../hooks/authContext';
 import { IAuthContext, Sdk } from '../types';
 
-
 const createSdk = dynamic(
 	() =>
 		import('@descope/web-js-sdk').then((module) => ({
