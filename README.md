@@ -1,2 +1,1 @@
-# nextjs-sdk
-Next JS SDK
+# Descope SDK for NextJS
