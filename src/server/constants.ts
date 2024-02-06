@@ -6,5 +6,5 @@ export const DESCOPE_SESSION_HEADER = 'x-descope-session';
 // eslint-disable-next-line import/prefer-default-export
 export const baseHeaders = {
 	'x-descope-sdk-name': 'nextjs',
-	'x-descope-sdk-version': BUILD_VERSION,
+	'x-descope-sdk-version': BUILD_VERSION
 };

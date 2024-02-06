@@ -22,7 +22,7 @@ type MiddlewareOptions = {
 	// - process.env.SIGN_IN_ROUTE or /sign-in if not provided
 	// - process.env.SIGN_UP_ROUTE or /sign-up if not provided
 	publicRoutes?: string[];
-}
+};
 
 function getSessionJwt(req: NextRequest): string | undefined {
 	let jwt = req.headers?.get('Authorization')?.split(' ')[1];
@@ -39,31 +39,39 @@ function getSessionJwt(req: NextRequest): string | undefined {
 
 const defaultPublicRoutes = {
 	signIn: process.env.SIGN_IN_ROUTE || '/sign-in',
-	signUp: process.env.SIGN_UP_ROUTE || '/sign-up',
+	signUp: process.env.SIGN_UP_ROUTE || '/sign-up'
 };
 
 const isPublicRoute = (req: NextRequest, options: MiddlewareOptions) => {
-	const isDefaultPublicRoute = Object.values(defaultPublicRoutes).includes(req.nextUrl.pathname);
+	const isDefaultPublicRoute = Object.values(defaultPublicRoutes).includes(
+		req.nextUrl.pathname
+	);
 	const isPublicRoute = options.publicRoutes?.includes(req.nextUrl.pathname);
 
 	return isDefaultPublicRoute || isPublicRoute;
-}
+};
 
-const addSessionToHeadersIfExists = (headers: Headers, session: AuthenticationInfo | undefined): Headers => {
+const addSessionToHeadersIfExists = (
+	headers: Headers,
+	session: AuthenticationInfo | undefined
+): Headers => {
 	if (session) {
-		const requestHeaders = new Headers(headers)
-		requestHeaders.set(DESCOPE_SESSION_HEADER, Buffer.from(JSON.stringify(session)).toString('base64'));
+		const requestHeaders = new Headers(headers);
+		requestHeaders.set(
+			DESCOPE_SESSION_HEADER,
+			Buffer.from(JSON.stringify(session)).toString('base64')
+		);
 		return requestHeaders;
 	}
 	return headers;
-}
+};
 
 // returns a Middleware that checks if the user is authenticated
 // if the user is not authenticated, it redirects to the redirectUrl
 // if the user is authenticated, it adds the session to the headers
 const createAuthMiddleware = (options: MiddlewareOptions = {}) => {
 	return async (req: NextRequest) => {
-		console.log('Auth middleware starts');
+		console.debug('Auth middleware starts');
 
 		const jwt = getSessionJwt(req);
 
@@ -72,28 +80,29 @@ const createAuthMiddleware = (options: MiddlewareOptions = {}) => {
 		try {
 			session = await getGlobalSdk({
 				projectId: options.projectId,
-				managementKey: options.managementKey,
+				managementKey: options.managementKey
 			}).validateJwt(jwt);
 		} catch (err) {
-			console.error('Auth middleware, Failed to validate JWT', err);
+			console.debug('Auth middleware, Failed to validate JWT', err);
 			if (!isPublicRoute(req, options)) {
-				const defaultRedirectUrl = options.redirectUrl || defaultPublicRoutes.signIn;
-				const url = req.nextUrl.clone()
+				const defaultRedirectUrl =
+					options.redirectUrl || defaultPublicRoutes.signIn;
+				const url = req.nextUrl.clone();
 				url.pathname = defaultRedirectUrl;
-				console.log(`Auth middleware, Redirecting to ${url}`);
+				console.debug(`Auth middleware, Redirecting to ${url}`);
 				return NextResponse.redirect(url);
 			}
 		}
 
-		console.log('Auth middleware finishes');
+		console.debug('Auth middleware finishes');
 		// add the session to the request, if it exists
 		const headers = addSessionToHeadersIfExists(req.headers, session);
 		return NextResponse.next({
 			request: {
 				headers
-			},
+			}
 		});
-	}
+	};
 };
 
 export default createAuthMiddleware;

@@ -4,14 +4,19 @@ import { DESCOPE_SESSION_HEADER } from './constants';
 
 // returns the session token if it exists in the headers
 // This function require middleware
-export default function session(): AuthenticationInfo | undefined {
-	const descopeSession = headers()?.get(DESCOPE_SESSION_HEADER)
+export default function session(
+	requestHeaders?: Headers
+): AuthenticationInfo | undefined {
+	const readyHeaders = requestHeaders || headers();
+	const descopeSession = readyHeaders?.get(DESCOPE_SESSION_HEADER);
 	if (!descopeSession) {
-		return undefined
+		return undefined;
 	}
 	try {
-		const authInfo = JSON.parse(Buffer.from(descopeSession, 'base64').toString()) as AuthenticationInfo
-		return authInfo
+		const authInfo = JSON.parse(
+			Buffer.from(descopeSession, 'base64').toString()
+		) as AuthenticationInfo;
+		return authInfo;
 	} catch (err) {
 		return undefined;
 	}

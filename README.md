@@ -1,4 +1,5 @@
 # Descope SDK for NextJS
 
 Notes:
- - document sessionTokenViaCookie is default to true
+
+- document sessionTokenViaCookie is default to true

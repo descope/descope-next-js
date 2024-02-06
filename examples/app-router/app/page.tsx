@@ -1,6 +1,5 @@
 import React from 'react';
 import { session } from '@descope/nextjs-sdk/server';
-import Link from 'next/link';
 import UserDetails from './UserDetails';
 
 async function Page() {
@@ -10,11 +9,7 @@ async function Page() {
 		<div>
 			<h1>App Router Home</h1>
 			<UserDetails />
-			{!sessionRes && (
-				<p>
-					User is not logged in
-				</p>
-			)}
+			<p>{!sessionRes ? 'User is not logged in' : 'User is logged in'}</p>
 		</div>
 	);
 }

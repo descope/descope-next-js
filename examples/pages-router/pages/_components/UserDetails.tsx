@@ -1,4 +1,3 @@
-'use client';
 import { useCallback } from 'react';
 import { useSession, useUser, useDescope } from '@descope/nextjs-sdk/client';
 import Link from 'next/link';

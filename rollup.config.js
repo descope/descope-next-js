@@ -15,7 +15,7 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 const commonPlugins = (outputDir) => [
 	define({
 		replacements: {
-			BUILD_VERSION: JSON.stringify(require('./package.json').version),
+			BUILD_VERSION: JSON.stringify(require('./package.json').version)
 		}
 	}),
 	typescript({
@@ -45,7 +45,7 @@ const configurations = ['server', 'client', ''].map((entry) => {
 			'next/router',
 			'next/navigation',
 			'next/link',
-			'next/headers',
+			'next/headers'
 		],
 		onwarn(warning, warn) {
 			if (
@@ -78,7 +78,9 @@ const configurations = ['server', 'client', ''].map((entry) => {
 });
 
 const endConfigurations = ['server', 'client', ''].map((entry) => {
-	const input = entry ? `./dist/dts/src/${entry}/index.d.ts` : './dist/dts/src/index.d.ts';
+	const input = entry
+		? `./dist/dts/src/${entry}/index.d.ts`
+		: './dist/dts/src/index.d.ts';
 	const outputFile = entry ? `dist/${entry}/index.d.ts` : 'dist/index.d.ts';
 	const srcDir = entry ? `./dist/${entry}/src` : './dist/src';
 	return {
@@ -88,13 +90,10 @@ const endConfigurations = ['server', 'client', ''].map((entry) => {
 			dts(),
 			del({
 				hook: 'buildEnd',
-				targets: srcDir,
+				targets: srcDir
 			})
 		]
-	}
+	};
 });
 
-export default [
-	...configurations,
-	...endConfigurations
-];
+export default [...configurations, ...endConfigurations];
