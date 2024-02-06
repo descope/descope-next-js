@@ -1,22 +1,18 @@
 import React from 'react';
-// import { session } from '@descope/nextjs-sdk';
-// import { NextRequest } from 'next/server';
+import { session } from '@descope/nextjs-sdk/server';
 import Link from 'next/link';
+import UserDetails from './UserDetails';
 
 async function Page() {
-	// const sessionRes = await session();
-
-	// console.log(sessionRes);
-
-	const sessionRes = false;
+	const sessionRes = session();
 
 	return (
 		<div>
 			<h1>App Router Home</h1>
-			{/* {sessionRes && <p>User is logged in</p>} */}
+			<UserDetails />
 			{!sessionRes && (
 				<p>
-					User is not logged in. <Link href="/login">Login</Link>
+					User is not logged in
 				</p>
 			)}
 		</div>

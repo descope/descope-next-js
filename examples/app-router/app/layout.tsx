@@ -11,7 +11,9 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<AuthProvider projectId="P2UEmfEerYrRzTavvNJI9bMTWePg">
+		<AuthProvider
+			projectId={process.env.NEXT_PUBLIC_DESCOPE_PROJECT_ID}
+		>
 			<html lang="en">
 				<body>{children}</body>
 			</html>

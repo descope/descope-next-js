@@ -10,7 +10,7 @@ function index() {
 
 	return (
 		<div>
-			<h1>App Router Home</h1>
+			<h1>Pages Router Home</h1>
 			{/* {sessionRes && <p>User is logged in</p>} */}
 			{!sessionRes && (
 				<p>

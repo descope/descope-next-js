@@ -1,3 +1,3 @@
-export * as server from '@descope/node-sdk';
-
-export { default as getSession } from './getSession';
+export { default as authMiddleware } from './authMiddleware';
+export { default as session } from './session';
+export { createSdk } from './sdk';

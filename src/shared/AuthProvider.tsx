@@ -4,5 +4,6 @@ import React, { ComponentProps } from 'react';
 import { AuthProvider } from '@descope/react-sdk';
 
 export default function (props: ComponentProps<typeof AuthProvider>) {
-	return <AuthProvider {...props} />;
+	// by default we use sessionTokenViaCookie, so middleware will work out of the box
+	return <AuthProvider sessionTokenViaCookie {...props} />;
 }

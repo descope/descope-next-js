@@ -16,41 +16,42 @@
 	"type": "module",
 	"exports": {
 		".": {
-			"require": {
-				"types": "./dist/index.d.ts",
-				"default": "./dist/index.js"
-			},
 			"import": {
 				"types": "./dist/index.d.ts",
 				"default": "./dist/index.js"
-			}
-		},
-		"./server": {
-			"require": {
-				"types": "./dist/server/index.d.ts",
-				"default": "./dist/server/index.js"
-			},
-			"import": {
-				"types": "./dist/server/index.d.ts",
-				"default": "./dist/server/index.mjs"
 			}
 		},
 		"./client": {
-			"require": {
-				"types": "./dist/client/index.d.ts",
-				"default": "./dist/client/index.js"
-			},
 			"import": {
 				"types": "./dist/client/index.d.ts",
-				"default": "./dist/client/index.mjs"
+				"default": "./dist/client/index.js"
 			}
+		},
+		"./server": {
+			"import": {
+				"types": "./dist/server/index.d.ts",
+				"default": "./dist/server/index.js"
+			}
+		}
+	},
+	"typesVersions": {
+		"*": {
+			"*": [
+				"dist/index.d.ts"
+			],
+			"client": [
+				"dist/client/index.d.ts"
+			],
+			"server": [
+				"dist/server/index.d.ts"
+			]
 		}
 	},
 	"main": "dist/index.js",
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
 	"files": [
-		"dist"
+		"dist/**/*"
 	],
 	"scripts": {
 		"build": "rollup -c",
@@ -70,7 +71,7 @@
 	},
 	"dependencies": {
 		"@descope/node-sdk": "1.6.2",
-		"@descope/react-sdk": "2.0.4"
+		"@descope/react-sdk": "0.0.0-next-c9382464-20240206"
 	},
 	"devDependencies": {
 		"@babel/core": "7.22.10",
