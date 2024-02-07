@@ -73,7 +73,7 @@
 		]
 	},
 	"dependencies": {
-		"@descope/node-sdk": "1.6.2",
+		"@descope/node-sdk": "1.6.3",
 		"@descope/react-sdk": "2.0.6"
 	},
 	"devDependencies": {
