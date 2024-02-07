@@ -3,14 +3,14 @@
 	"version": "0.0.1-alpha.0",
 	"description": "Descope NextJS SDK",
 	"author": "Descope Team <info@descope.com>",
-	"homepage": "https://github.com/descope/nextjs-sdk",
+	"homepage": "https://github.com/descope/descope-next-js",
 	"bugs": {
-		"url": "https://github.com/descope/nextjs-sdk/issues",
+		"url": "https://github.com/descope/descope-next-js/issues",
 		"email": "help@descope.com"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/descope/nextjs-sdk.git"
+		"url": "https://github.com/descope/descope-next-js.git"
 	},
 	"license": "MIT",
 	"type": "module",
