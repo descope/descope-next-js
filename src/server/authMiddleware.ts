@@ -9,10 +9,6 @@ type MiddlewareOptions = {
 	// Defaults to process.env.DESCOPE_PROJECT_ID
 	projectId?: string;
 
-	// The Descope management key to use for authentication
-	// Defaults to process.env.DESCOPE_MANAGEMENT_KEY
-	managementKey?: string;
-
 	// The URL to redirect to if the user is not authenticated
 	// Defaults to process.env.SIGN_IN_ROUTE or '/sign-in' if not provided
 	redirectUrl?: string;
@@ -79,8 +75,7 @@ const createAuthMiddleware = (options: MiddlewareOptions = {}) => {
 		let session: AuthenticationInfo | undefined;
 		try {
 			session = await getGlobalSdk({
-				projectId: options.projectId,
-				managementKey: options.managementKey
+				projectId: options.projectId
 			}).validateJwt(jwt);
 		} catch (err) {
 			console.debug('Auth middleware, Failed to validate JWT', err);

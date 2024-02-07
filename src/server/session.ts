@@ -1,14 +1,11 @@
 import { AuthenticationInfo } from '@descope/node-sdk';
+import { NextApiRequest } from 'next';
 import { headers } from 'next/headers';
 import { DESCOPE_SESSION_HEADER } from './constants';
 
-// returns the session token if it exists in the headers
-// This function require middleware
-export default function session(
-	requestHeaders?: Headers
+function extractSession(
+	descopeSession?: string
 ): AuthenticationInfo | undefined {
-	const readyHeaders = requestHeaders || headers();
-	const descopeSession = readyHeaders?.get(DESCOPE_SESSION_HEADER);
 	if (!descopeSession) {
 		return undefined;
 	}
@@ -20,4 +17,19 @@ export default function session(
 	} catch (err) {
 		return undefined;
 	}
+}
+// returns the session token if it exists in the headers
+// This function require middleware
+export function session(): AuthenticationInfo | undefined {
+	return extractSession(headers()?.get(DESCOPE_SESSION_HEADER));
+}
+
+// returns the session token if it exists in the request headers
+// This function require middleware
+export function getSession(
+	req: NextApiRequest
+): AuthenticationInfo | undefined {
+	return extractSession(
+		req.headers[DESCOPE_SESSION_HEADER.toLowerCase()] as string
+	);
 }

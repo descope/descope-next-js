@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { createSdk, session } from '@descope/nextjs-sdk/server';
+import { createSdk, getSession } from '@descope/nextjs-sdk/server';
 
 const sdk = createSdk({
 	projectId: process.env.NEXT_PUBLIC_DESCOPE_PROJECT_ID,
@@ -10,10 +10,7 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	// Temporary workaround for the headers issue in pages router
-	const currentSession = session(
-		new Headers(req.headers as { [key: string]: string })
-	);
+	const currentSession = getSession(req);
 	if (!currentSession) {
 		return res.status(401).json({ message: 'Unauthorized' });
 	}

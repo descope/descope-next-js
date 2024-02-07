@@ -9,7 +9,7 @@ type CreateSdkParams = Omit<Parameters<typeof descopeSdk>[0], 'projectId'> & {
 let globalSdk: Sdk;
 
 export const getGlobalSdk = (
-	config?: Pick<CreateSdkParams, 'projectId' | 'managementKey'>
+	config?: Pick<CreateSdkParams, 'projectId'>
 ): Sdk => {
 	if (!globalSdk) {
 		if (!config?.projectId && !process.env.DESCOPE_PROJECT_ID) {
