@@ -16,7 +16,7 @@ const UserDetails = () => {
 	return (
 		<div>
 			<h4>User Details</h4>
-			{/* Navigate to login*/}
+			{/* Navigate to login */}
 			{!isAuthenticated && (
 				<p>
 					Not authenticated <Link href="/login">Login</Link>

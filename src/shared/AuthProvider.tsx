@@ -1,9 +1,12 @@
 'use client';
+
 import React, { ComponentProps } from 'react';
 
-import { AuthProvider } from '@descope/react-sdk';
+import { AuthProvider as AuthProviderComp } from '@descope/react-sdk';
 
-export default function (props: ComponentProps<typeof AuthProvider>) {
+const AuthProvider = (props: ComponentProps<typeof AuthProviderComp>) => (
 	// by default we use sessionTokenViaCookie, so middleware will work out of the box
-	return <AuthProvider sessionTokenViaCookie {...props} />;
-}
+	<AuthProviderComp sessionTokenViaCookie {...props} />
+);
+
+export default AuthProvider;

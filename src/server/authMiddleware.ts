@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { NextRequest, NextResponse } from 'next/server';
 import descopeSdk from '@descope/node-sdk';
 import type { AuthenticationInfo } from '@descope/node-sdk';
@@ -20,7 +21,7 @@ type MiddlewareOptions = {
 	publicRoutes?: string[];
 };
 
-function getSessionJwt(req: NextRequest): string | undefined {
+const getSessionJwt = (req: NextRequest): string | undefined => {
 	let jwt = req.headers?.get('Authorization')?.split(' ')[1];
 	if (jwt) {
 		return jwt;
@@ -31,7 +32,7 @@ function getSessionJwt(req: NextRequest): string | undefined {
 		return jwt;
 	}
 	return undefined;
-}
+};
 
 const defaultPublicRoutes = {
 	signIn: process.env.SIGN_IN_ROUTE || '/sign-in',
@@ -42,9 +43,9 @@ const isPublicRoute = (req: NextRequest, options: MiddlewareOptions) => {
 	const isDefaultPublicRoute = Object.values(defaultPublicRoutes).includes(
 		req.nextUrl.pathname
 	);
-	const isPublicRoute = options.publicRoutes?.includes(req.nextUrl.pathname);
+	const isPublic = options.publicRoutes?.includes(req.nextUrl.pathname);
 
-	return isDefaultPublicRoute || isPublicRoute;
+	return isDefaultPublicRoute || isPublic;
 };
 
 const addSessionToHeadersIfExists = (
@@ -65,8 +66,9 @@ const addSessionToHeadersIfExists = (
 // returns a Middleware that checks if the user is authenticated
 // if the user is not authenticated, it redirects to the redirectUrl
 // if the user is authenticated, it adds the session to the headers
-const createAuthMiddleware = (options: MiddlewareOptions = {}) => {
-	return async (req: NextRequest) => {
+const createAuthMiddleware =
+	(options: MiddlewareOptions = {}) =>
+	async (req: NextRequest) => {
 		console.debug('Auth middleware starts');
 
 		const jwt = getSessionJwt(req);
@@ -98,6 +100,5 @@ const createAuthMiddleware = (options: MiddlewareOptions = {}) => {
 			}
 		});
 	};
-};
 
 export default createAuthMiddleware;

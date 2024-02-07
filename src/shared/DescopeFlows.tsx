@@ -1,4 +1,5 @@
 'use client';
+
 import React, { ComponentType, ComponentProps } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
@@ -27,16 +28,18 @@ type DynamicComponentProps = {
 // Generalized function to dynamically import components from @descope/react-sdk
 // Dynamic is needed because the Descope components has a side effect us
 // and NextJS will load the page on the server even if it is a client side only page
-function dynamicDescopeComponent<
+const dynamicDescopeComponent = <
 	T extends ComponentType<DynamicComponentProps>
->(componentName: string) {
-	return dynamic<ComponentProps<T> & AdditionalProps>(
+>(
+	componentName: string
+) =>
+	dynamic<ComponentProps<T> & AdditionalProps>(
 		async () => {
 			const DescopeComponents = await import('@descope/react-sdk');
 			const Component = DescopeComponents[componentName];
 			return ({
-				redirectAfterSuccess,
-				redirectAfterError,
+				redirectAfterSuccess = '',
+				redirectAfterError = '',
 				...props
 			}: ComponentProps<T> & AdditionalProps) => {
 				const router = useRouter();
@@ -66,7 +69,6 @@ function dynamicDescopeComponent<
 			ssr: false
 		}
 	);
-}
 
 export const Descope =
 	dynamicDescopeComponent<React.ComponentType<DescopeWCProps>>('Descope');

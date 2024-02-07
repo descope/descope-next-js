@@ -3,9 +3,9 @@ import { NextApiRequest } from 'next';
 import { headers } from 'next/headers';
 import { DESCOPE_SESSION_HEADER } from './constants';
 
-function extractSession(
+const extractSession = (
 	descopeSession?: string
-): AuthenticationInfo | undefined {
+): AuthenticationInfo | undefined => {
 	if (!descopeSession) {
 		return undefined;
 	}
@@ -17,19 +17,15 @@ function extractSession(
 	} catch (err) {
 		return undefined;
 	}
-}
+};
 // returns the session token if it exists in the headers
 // This function require middleware
-export function session(): AuthenticationInfo | undefined {
-	return extractSession(headers()?.get(DESCOPE_SESSION_HEADER));
-}
+export const session = (): AuthenticationInfo | undefined =>
+	extractSession(headers()?.get(DESCOPE_SESSION_HEADER));
 
 // returns the session token if it exists in the request headers
 // This function require middleware
-export function getSession(
+export const getSession = (
 	req: NextApiRequest
-): AuthenticationInfo | undefined {
-	return extractSession(
-		req.headers[DESCOPE_SESSION_HEADER.toLowerCase()] as string
-	);
-}
+): AuthenticationInfo | undefined =>
+	extractSession(req.headers[DESCOPE_SESSION_HEADER.toLowerCase()] as string);

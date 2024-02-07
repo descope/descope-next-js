@@ -8,6 +8,18 @@ type CreateSdkParams = Omit<Parameters<typeof descopeSdk>[0], 'projectId'> & {
 
 let globalSdk: Sdk;
 
+export const createSdk = (config?: CreateSdkParams): Sdk =>
+	descopeSdk({
+		...config,
+		projectId: config.projectId || process.env.DESCOPE_PROJECT_ID,
+		managementKey: config.managementKey || process.env.DESCOPE_MANAGEMENT_KEY,
+		baseUrl: config.baseUrl || process.env.DESCOPE_BASE_URL,
+		baseHeaders: {
+			...config?.baseHeaders,
+			...baseHeaders
+		}
+	});
+
 export const getGlobalSdk = (
 	config?: Pick<CreateSdkParams, 'projectId'>
 ): Sdk => {
@@ -19,17 +31,4 @@ export const getGlobalSdk = (
 	}
 
 	return globalSdk;
-};
-
-export const createSdk = (config?: CreateSdkParams): Sdk => {
-	return descopeSdk({
-		...config,
-		projectId: config.projectId || process.env.DESCOPE_PROJECT_ID,
-		managementKey: config.managementKey || process.env.DESCOPE_MANAGEMENT_KEY,
-		baseUrl: config.baseUrl || process.env.DESCOPE_BASE_URL,
-		baseHeaders: {
-			...config?.baseHeaders,
-			...baseHeaders
-		}
-	});
 };
