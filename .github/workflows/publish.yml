@@ -18,6 +18,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: package.json
+          # publish to npmjs.com
+          registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
         run: npm ci
 
