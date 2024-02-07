@@ -1,0 +1,19 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": ["local>descope/renovate-config"],
+	"packageRules": [
+		{
+			"matchDepNames": ["react", "react-dom"],
+			"allowedVersions": "<=17"
+		},
+		{
+			"matchDepNames": [
+				"react",
+				"react-dom",
+				"@testing-library/react-hooks",
+				"@types/react"
+			],
+			"enabled": false
+		}
+	]
+}
