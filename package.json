@@ -58,7 +58,8 @@
 		"format": "prettier . -w --ignore-path .gitignore",
 		"format-check": "prettier . --check --ignore-path .gitignore",
 		"leaks": "bash ./scripts/gitleaks/gitleaks.sh",
-		"lint": "eslint '+(src)/**/*.+(ts|tsx)' --fix",
+		"lint": "npm run lint-check -- --fix",
+		"lint-check": "eslint '+(src)/**/*.+(ts|tsx)'",
 		"prepare": "husky install",
 		"prepublishOnly": "npm run build",
 		"start": "npm run build && (cd examples/app-router && npm run dev)",
@@ -66,7 +67,9 @@
 	},
 	"lint-staged": {
 		"+(src|test|examples)/**/*.{js,ts,jsx,tsx}": [
-			"npm run lint"
+			"npm run lint",
+			"npm run format",
+			"npm run leaks"
 		]
 	},
 	"dependencies": {
@@ -141,5 +144,8 @@
 	},
 	"optionalDependencies": {
 		"@descope/web-js-sdk": ">=1"
+	},
+	"engines": {
+		"node": "^18 || ^20"
 	}
 }
