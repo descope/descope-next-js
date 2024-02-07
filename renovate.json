@@ -11,7 +11,8 @@
 				"react",
 				"react-dom",
 				"@testing-library/react-hooks",
-				"@types/react"
+				"@types/react",
+        "rollup-plugin-browsersync"
 			],
 			"enabled": false
 		}
