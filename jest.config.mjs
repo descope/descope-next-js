@@ -11,5 +11,15 @@ export default {
 			{ configFile: './babel.config.cjs' }
 		]
 	},
-	testEnvironment: 'jsdom'
+	globals: {
+		'ts-jest': {
+			tsconfig: 'tsconfig.json'
+		},
+		BUILD_VERSION: 'one.two.three'
+	},
+	testEnvironment: 'jsdom',
+	transformIgnorePatterns: [
+		// If there are node_modules not being correctly transpiled, you might need to adjust this pattern
+		'node_modules/(?!(jose)/)'
+	]
 };

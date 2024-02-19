@@ -650,4 +650,5 @@ paths = [
     '''gitleaks.toml''',
     '''(.*?)(jpg|gif|doc|pdf|bin|svg|socket|js|ts|json)$''',
 	"node_modules/",
+	".*/\\.next/.*", # This line is added to ignore the .next directory
 ]
