@@ -9,16 +9,12 @@ jest.mock('@descope/node-sdk', () =>
 	}))
 );
 
-jest.mock('next/server', () =>
-	// Define redirect mock function inside the factory function
-	({
-		NextResponse: {
-			redirect: jest.fn(),
-			// Ensure next() is mocked to return an appropriate structure if needed
-			next: jest.fn()
-		}
-	})
-);
+jest.mock('next/server', () => ({
+	NextResponse: {
+		redirect: jest.fn(),
+		next: jest.fn()
+	}
+}));
 
 // Utility function to create a mock NextRequest
 const createMockNextRequest = (
@@ -65,7 +61,7 @@ describe('authMiddleware', () => {
 		const mockReq = createMockNextRequest({ pathname: '/private' });
 
 		const response = await middleware(mockReq);
-		expect(NextResponse.redirect).toHaveBeenCalledWith(expect.anything()); // Add specific redirect URL if applicable
+		expect(NextResponse.redirect).toHaveBeenCalledWith(expect.anything());
 		expect(response).toEqual({
 			pathname: DEFAULT_PUBLIC_ROUTES.signIn
 		});

@@ -21,8 +21,8 @@ const extractSession = (
 // returns the session token if it exists in the headers
 // This function require middleware
 export const session = (): AuthenticationInfo | undefined => {
-	const sess = headers()?.get(DESCOPE_SESSION_HEADER);
-	return extractSession(sess);
+	const sessionHeader = headers()?.get(DESCOPE_SESSION_HEADER);
+	return extractSession(sessionHeader);
 };
 
 // returns the session token if it exists in the request headers

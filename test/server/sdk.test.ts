@@ -1,4 +1,5 @@
 import descopeSdk from '@descope/node-sdk';
+import { baseHeaders } from '../../src/server/constants';
 import { createSdk, getGlobalSdk } from '../../src/server/sdk';
 
 jest.mock('@descope/node-sdk', () => jest.fn());
@@ -9,7 +10,7 @@ describe('sdk', () => {
 	});
 
 	afterEach(() => {
-		jest.resetModules(); // Reset modules if you are changing env vars
+		jest.resetModules();
 	});
 
 	describe('createSdk', () => {
@@ -21,7 +22,7 @@ describe('sdk', () => {
 				expect.objectContaining({
 					projectId: 'project1',
 					managementKey: 'key1',
-					baseHeaders: expect.any(Object) // Adjust according to your baseHeaders structure
+					baseHeaders: expect.objectContaining(baseHeaders)
 				})
 			);
 		});
@@ -57,7 +58,6 @@ describe('sdk', () => {
 			expect(descopeSdk).toHaveBeenCalledWith(
 				expect.objectContaining({
 					projectId: 'project1'
-					// Include other default parameters as needed
 				})
 			);
 		});
@@ -70,7 +70,7 @@ describe('sdk', () => {
 		});
 
 		it("should throw an error if no projectId is provided and it's not in env", () => {
-			// Ensure the environment variable is not set
+			// environment variable is not set and no projectId is provided
 			delete process.env.DESCOPE_PROJECT_ID;
 
 			expect(() => getGlobalSdk()).toThrow(
