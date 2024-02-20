@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import descopeSdk from '@descope/node-sdk';
 import type { AuthenticationInfo } from '@descope/node-sdk';
-import { DESCOPE_SESSION_HEADER } from './constants';
+import { DEFAULT_PUBLIC_ROUTES, DESCOPE_SESSION_HEADER } from './constants';
 import { getGlobalSdk } from './sdk';
 
 type MiddlewareOptions = {
@@ -34,13 +34,8 @@ const getSessionJwt = (req: NextRequest): string | undefined => {
 	return undefined;
 };
 
-const defaultPublicRoutes = {
-	signIn: process.env.SIGN_IN_ROUTE || '/sign-in',
-	signUp: process.env.SIGN_UP_ROUTE || '/sign-up'
-};
-
 const isPublicRoute = (req: NextRequest, options: MiddlewareOptions) => {
-	const isDefaultPublicRoute = Object.values(defaultPublicRoutes).includes(
+	const isDefaultPublicRoute = Object.values(DEFAULT_PUBLIC_ROUTES).includes(
 		req.nextUrl.pathname
 	);
 	const isPublic = options.publicRoutes?.includes(req.nextUrl.pathname);
@@ -82,11 +77,10 @@ const createAuthMiddleware =
 		} catch (err) {
 			console.debug('Auth middleware, Failed to validate JWT', err);
 			if (!isPublicRoute(req, options)) {
-				const defaultRedirectUrl =
-					options.redirectUrl || defaultPublicRoutes.signIn;
+				const redirectUrl = options.redirectUrl || DEFAULT_PUBLIC_ROUTES.signIn;
 				const url = req.nextUrl.clone();
-				url.pathname = defaultRedirectUrl;
-				console.debug(`Auth middleware, Redirecting to ${url}`);
+				url.pathname = redirectUrl;
+				console.debug(`Auth middleware, Redirecting to ${redirectUrl}`);
 				return NextResponse.redirect(url);
 			}
 		}
