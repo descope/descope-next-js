@@ -11,9 +11,9 @@ let globalSdk: Sdk;
 export const createSdk = (config?: CreateSdkParams): Sdk =>
 	descopeSdk({
 		...config,
-		projectId: config.projectId || process.env.DESCOPE_PROJECT_ID,
-		managementKey: config.managementKey || process.env.DESCOPE_MANAGEMENT_KEY,
-		baseUrl: config.baseUrl || process.env.DESCOPE_BASE_URL,
+		projectId: config?.projectId || process.env.DESCOPE_PROJECT_ID,
+		managementKey: config?.managementKey || process.env.DESCOPE_MANAGEMENT_KEY,
+		baseUrl: config?.baseUrl || process.env.DESCOPE_BASE_URL,
 		baseHeaders: {
 			...config?.baseHeaders,
 			...baseHeaders

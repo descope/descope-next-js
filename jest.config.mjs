@@ -11,5 +11,12 @@ export default {
 			{ configFile: './babel.config.cjs' }
 		]
 	},
-	testEnvironment: 'jsdom'
+	globals: {
+		'ts-jest': {
+			tsconfig: 'tsconfig.json'
+		},
+		BUILD_VERSION: 'one.two.three'
+	},
+	testEnvironment: 'jsdom',
+	transformIgnorePatterns: ['node_modules/(?!(jose)/)']
 };

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-namespace */
 import * as clientIndex from '../src/client/index';
 import * as serverIndex from '../src/server/index';
 import * as sharedIndex from '../src/index';
@@ -16,10 +17,10 @@ describe('index', () => {
 
 	it('should import the correct things from server', () => {
 		// Need to fix babel/jest to get this working
-		// expect(serverIndex).toHaveProperty('authMiddleware');
-		// expect(serverIndex).toHaveProperty('createSdk');
-		// expect(serverIndex).toHaveProperty('session');
-		// expect(serverIndex).toHaveProperty('getSession');
+		expect(serverIndex).toHaveProperty('authMiddleware');
+		expect(serverIndex).toHaveProperty('createSdk');
+		expect(serverIndex).toHaveProperty('session');
+		expect(serverIndex).toHaveProperty('getSession');
 	});
 
 	it('should import the correct things from shared', () => {
