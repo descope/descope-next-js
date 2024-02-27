@@ -30,7 +30,7 @@ For Pages router, see the [Pages Router](#pages-router) section.
 ```js
 // src/app/layout.tsx
 
-import { AuthProvider } from '@descope/nextjs-sdk'
+import { AuthProvider } from '@descope/nextjs-sdk';
 
 export default function RootLayout({
 	children
@@ -38,14 +38,12 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<AuthProvider
-			projectId="your-descope-project-id"
-		>
+		<AuthProvider projectId="your-descope-project-id">
 			<html lang="en">
 				<body>{children}</body>
 			</html>
 		</AuthProvider>
-	)
+	);
 }
 ```
 
@@ -57,9 +55,9 @@ You can use **default flows** or **provide flow id** directly to the Descope com
 
 ```js
 // Login page, e.g. src/app/sign-in.tsx
-import { Descope } from '@descope/react-sdk';
+import { Descope } from '@descope/nextjs-sdk';
 // you can choose flow to run from the following without `flowId` instead
-// import { SignInFlow, SignUpFlow, SignUpOrInFlow } from '@descope/react-sdk'
+// import { SignInFlow, SignUpFlow, SignUpOrInFlow } from '@descope/nextjs-sdk'
 
 const Page = () => {
 	return (
