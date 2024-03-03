@@ -74,7 +74,7 @@
 	},
 	"dependencies": {
 		"@descope/node-sdk": "1.6.3",
-		"@descope/react-sdk": "/Users/asafshen/dev/go/src/github.com/descope/react-sdk/descope-react-sdk-2.0.7.tgz"
+		"@descope/react-sdk": "2.0.6"
 	},
 	"devDependencies": {
 		"@babel/core": "7.23.9",
