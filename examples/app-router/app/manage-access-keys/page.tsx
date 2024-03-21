@@ -7,9 +7,7 @@ export default function ManageAccessKeys() {
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
-				justifyContent: 'center',
-				maxWidth: '800px',
-				border: '1px solid black'
+				justifyContent: 'center'
 			}}
 		>
 			<h1>Manage Access Keys</h1>

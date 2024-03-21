@@ -7,8 +7,7 @@ export default function ManageUsers() {
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
-				justifyContent: 'center',
-				height: '100vh'
+				justifyContent: 'center'
 			}}
 		>
 			<h1>Manage Users</h1>

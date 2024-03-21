@@ -7,8 +7,7 @@ export default function ManageRoles() {
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
-				justifyContent: 'center',
-				height: '100vh'
+				justifyContent: 'center'
 			}}
 		>
 			<h1>Manage Roles</h1>
