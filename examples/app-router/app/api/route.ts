@@ -2,6 +2,7 @@ import { createSdk, session } from '@descope/nextjs-sdk/server';
 
 const sdk = createSdk({
 	projectId: process.env.NEXT_PUBLIC_DESCOPE_PROJECT_ID,
+	baseUrl: process.env.NEXT_PUBLIC_DESCOPE_BASE_URL,
 	managementKey: process.env.DESCOPE_MANAGEMENT_KEY
 });
 
