@@ -1,5 +1,5 @@
 import descopeSdk from '@descope/node-sdk';
-import { baseHeaders } from './constants';
+import { baseHeaders } from '../shared/constants';
 
 type Sdk = ReturnType<typeof descopeSdk>;
 type CreateSdkParams = Omit<Parameters<typeof descopeSdk>[0], 'projectId'> & {

@@ -1,5 +1,5 @@
 import descopeSdk from '@descope/node-sdk';
-import { baseHeaders } from '../../src/server/constants';
+import { baseHeaders } from '../../src/shared/constants';
 import { createSdk, getGlobalSdk } from '../../src/server/sdk';
 
 jest.mock('@descope/node-sdk', () => jest.fn());

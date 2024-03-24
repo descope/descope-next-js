@@ -9,6 +9,7 @@ import {
 	SignUpFlow as SignUpFlowWC,
 	SignUpOrInFlow as SignUpOrInFlowWC
 } from '@descope/react-sdk';
+import { baseHeaders as nextBaseHeaders } from './constants';
 
 type DescopeWCProps = ComponentProps<typeof DescopeWC>;
 type SignInFlowProps = ComponentProps<typeof SignInFlowWC>;
@@ -36,6 +37,10 @@ const dynamicDescopeComponent = <
 	dynamic<ComponentProps<T> & AdditionalProps>(
 		async () => {
 			const DescopeComponents = await import('@descope/react-sdk');
+
+			// Override baseHeaders
+			Object.assign(DescopeComponents.baseHeaders, nextBaseHeaders);
+
 			const Component = DescopeComponents[componentName];
 			return ({
 				redirectAfterSuccess = '',
