@@ -116,4 +116,17 @@ describe('authMiddleware', () => {
 			pathname: customRedirectUrl
 		});
 	});
+
+	it('support and redirect url with search params', async () => {
+		mockValidateJwt.mockRejectedValue(new Error('Invalid JWT'));
+		const customRedirectUrl = '/custom-sign-in?redirect=/another-path';
+		const middleware = authMiddleware({ redirectUrl: customRedirectUrl });
+		const mockReq = createMockNextRequest({ pathname: '/private' });
+
+		await middleware(mockReq);
+		expect(NextResponse.redirect).toHaveBeenCalledWith({
+			pathname: '/custom-sign-in',
+			search: `redirect=${encodeURIComponent('/another-path')}`
+		});
+	});
 });
