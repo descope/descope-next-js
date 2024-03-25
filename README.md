@@ -217,6 +217,10 @@ const sdk = createSdk({
 	// The Descope management key to use for management operations
 	// Defaults to process.env.DESCOPE_MANAGEMENT_KEY
 	managementKey: 'your-descope-management-key'
+
+	// Optional: Descope API base URL
+	// Defaults to process.env.DESCOPE_BASE_URL
+	// baseUrl: 'https://...'
 });
 
 export async function GET(req) {

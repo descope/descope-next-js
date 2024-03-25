@@ -1,5 +1,5 @@
 import descopeSdk from '@descope/node-sdk';
-import { baseHeaders } from './constants';
+import { baseHeaders } from '../shared/constants';
 
 type Sdk = ReturnType<typeof descopeSdk>;
 type CreateSdkParams = Omit<Parameters<typeof descopeSdk>[0], 'projectId'> & {
@@ -21,7 +21,7 @@ export const createSdk = (config?: CreateSdkParams): Sdk =>
 	});
 
 export const getGlobalSdk = (
-	config?: Pick<CreateSdkParams, 'projectId'>
+	config?: Pick<CreateSdkParams, 'projectId' | 'baseUrl'>
 ): Sdk => {
 	if (!globalSdk) {
 		if (!config?.projectId && !process.env.DESCOPE_PROJECT_ID) {

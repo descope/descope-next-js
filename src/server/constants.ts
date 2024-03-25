@@ -1,6 +1,3 @@
-// Replaced in build time
-declare const BUILD_VERSION: string;
-
 export const DESCOPE_SESSION_HEADER = 'x-descope-session';
 
 export const baseHeaders = {

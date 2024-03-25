@@ -12,7 +12,7 @@ jest.mock('next/navigation', () => ({
 
 jest.mock('@descope/web-component', () => ({ default: {} }));
 
-describe('Descope', () => {
+describe('Descope Flows', () => {
 	beforeEach(() => {
 		mockPush.mockClear();
 	});
