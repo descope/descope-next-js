@@ -217,6 +217,10 @@ const sdk = createSdk({
 	// The Descope management key to use for management operations
 	// Defaults to process.env.DESCOPE_MANAGEMENT_KEY
 	managementKey: 'your-descope-management-key'
+
+	// Optional: Descope API base URL
+	// Defaults to process.env.DESCOPE_BASE_URL
+	// baseUrl: 'https://...'
 });
 
 export async function GET(req) {
@@ -235,6 +239,98 @@ export async function GET(req) {
 
 This section is Working in progress :-)
 In the meantime, you can see the example in the [Pages Router](/examples/pages-router/) folder.
+
+### Widgets
+
+Widgets are components that allow you to expose management features for tenant-based implementation. In certain scenarios, your customers may require the capability to perform managerial actions independently, alleviating the necessity to contact you. Widgets serve as a feature enabling you to delegate these capabilities to your customers in a modular manner.
+
+Important Note:
+
+- For the user to be able to use the widget, they need to be assigned the `Tenant Admin` Role.
+
+#### User Management
+
+The `UserManagement` widget will let you embed a user table in your site to view and take action.
+
+The widget lets you:
+
+- Create a new user
+- Edit an existing user
+- Activate / disable an existing user
+- Reset an existing user's password
+- Remove an existing user's passkey
+- Delete an existing user
+
+Note:
+
+- Custom fields also appear in the table.
+
+###### Usage
+
+```js
+import { UserManagement } from '@descope/nextjs-sdk';
+...
+  <UserManagement
+    widgetId="user-management-widget"
+    tenant="tenant-id"
+  />
+```
+
+Example:
+[Manage Users](./examples/app-router/app/manage-users/page.tsx)
+
+#### Role Management
+
+The `RoleManagement` widget will let you embed a role table in your site to view and take action.
+
+The widget lets you:
+
+- Create a new role
+- Change an existing role's fields
+- Delete an existing role
+
+Note:
+
+- The `Editable` field is determined by the user's access to the role - meaning that project-level roles are not editable by tenant level users.
+- You need to pre-define the permissions that the user can use, which are not editable in the widget.
+
+###### Usage
+
+```js
+import { RoleManagement } from '@descope/nextjs-sdk';
+...
+  <RoleManagement
+    widgetId="role-management-widget"
+    tenant="tenant-id"
+  />
+```
+
+Example:
+[Manage Roles](./examples/app-router/app/manage-roles/page.tsx)
+
+#### Access Key Management
+
+The `AccessKeyManagement` widget will let you embed an access key table in your site to view and take action.
+
+The widget lets you:
+
+- Create a new access key
+- Activate / deactivate an existing access key
+- Delete an exising access key
+
+###### Usage
+
+```js
+import { AccessKeyManagement } from '@descope/nextjs-sdk';
+...
+  <AccessKeyManagement
+    widgetId="access-key-management-widget"
+    tenant="tenant-id"
+  />
+```
+
+Example:
+[Manage Access Keys](./examples/app-router/app/manage-access-keys/page.tsx)
 
 ## Code Example
 
