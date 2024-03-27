@@ -77,8 +77,8 @@
 		"@descope/react-sdk": "2.0.13"
 	},
 	"devDependencies": {
-		"@babel/core": "7.23.9",
-		"@babel/preset-env": "7.23.9",
+		"@babel/core": "7.24.0",
+		"@babel/preset-env": "7.24.0",
 		"@babel/preset-react": "7.23.3",
 		"@babel/preset-typescript": "7.23.3",
 		"@open-wc/rollup-plugin-html": "^1.2.5",
