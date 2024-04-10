@@ -8,6 +8,8 @@ export {
 	useUser,
 	getSessionToken,
 	getRefreshToken,
+	isSessionTokenExpired,
+	isRefreshTokenExpired,
 	getJwtPermissions,
 	getJwtRoles,
 	refresh

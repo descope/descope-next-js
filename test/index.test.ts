@@ -10,6 +10,8 @@ describe('index', () => {
 		expect(clientIndex).toHaveProperty('useUser');
 		expect(clientIndex).toHaveProperty('getSessionToken');
 		expect(clientIndex).toHaveProperty('getRefreshToken');
+		expect(clientIndex).toHaveProperty('isSessionTokenExpired');
+		expect(clientIndex).toHaveProperty('isRefreshTokenExpired');
 		expect(clientIndex).toHaveProperty('getJwtPermissions');
 		expect(clientIndex).toHaveProperty('getJwtRoles');
 		expect(clientIndex).toHaveProperty('refresh');
