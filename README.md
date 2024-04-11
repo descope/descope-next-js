@@ -332,6 +332,24 @@ import { AccessKeyManagement } from '@descope/nextjs-sdk';
 Example:
 [Manage Access Keys](./examples/app-router/app/manage-access-keys/page.tsx)
 
+#### Audit Management
+
+The `AuditManagement` widget will let you embed an audit table in your site.
+
+###### Usage
+
+```js
+import { AuditManagement } from '@descope/nextjs-sdk';
+...
+  <AuditManagement
+    widgetId="audit-management-widget"
+    tenant="tenant-id"
+  />
+```
+
+Example:
+[Manage Audit](./examples/app-router/app/manage-audit/page.tsx)
+
 ## Code Example
 
 You can find an example react app in the [examples folder](./examples). - [App Router](/examples/app-router/) - [Pages Router](/examples/pages-router/)
