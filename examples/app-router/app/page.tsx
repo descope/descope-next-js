@@ -1,9 +1,9 @@
 import React from 'react';
-import { session } from '@descope/nextjs-sdk/server';
-import UserDetails from './UserDetails';
+import { session } from '@descope/nextjs-sdk/server'; // eslint-disable-line
 import Link from 'next/link';
+import UserDetails from './UserDetails';
 
-async function Page() {
+const Page = async () => {
 	const sessionRes = session();
 
 	return (
@@ -12,7 +12,7 @@ async function Page() {
 			<UserDetails />
 			<p>{!sessionRes ? 'User is not logged in' : 'User is logged in'}</p>
 			{
-				// show link to Manage Users, Roles, and Access Keys if user is logged in
+				// show link to Manage Users, Roles, Audit, and Access Keys if user is logged in
 				true && (
 					<div>
 						<Link href="/manage-users">Manage Users</Link>
@@ -20,11 +20,13 @@ async function Page() {
 						<Link href="/manage-roles">Manage Roles</Link>
 						<br />
 						<Link href="/manage-access-keys">Manage Access Keys</Link>
+						<br />
+						<Link href="/manage-audit">Manage Audit</Link>
 					</div>
 				)
 			}
 		</div>
 	);
-}
+};
 
 export default Page;

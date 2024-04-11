@@ -5,7 +5,8 @@ import dynamic from 'next/dynamic';
 import {
 	UserManagement as UserManagementWC,
 	RoleManagement as RoleManagementWC,
-	AccessKeyManagement as AccessKeyManagementWC
+	AccessKeyManagement as AccessKeyManagementWC,
+	AuditManagement as AuditManagementWC
 } from '@descope/react-sdk';
 
 // a helper function to dynamically load the components
@@ -22,3 +23,4 @@ export const RoleManagement = dynamicWidgetComponent(RoleManagementWC);
 export const AccessKeyManagement = dynamicWidgetComponent(
 	AccessKeyManagementWC
 );
+export const AuditManagement = dynamicWidgetComponent(AuditManagementWC);

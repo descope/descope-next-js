@@ -6,7 +6,8 @@ import AuthProvider from '../../src/shared/AuthProvider';
 import {
 	UserManagement,
 	RoleManagement,
-	AccessKeyManagement
+	AccessKeyManagement,
+	AuditManagement
 } from '../../src/shared/DescopeWidgets';
 
 const mockPush = jest.fn();
@@ -17,6 +18,7 @@ jest.mock('next/navigation', () => ({
 jest.mock('@descope/user-management-widget', () => ({ default: {} }));
 jest.mock('@descope/role-management-widget', () => ({ default: {} }));
 jest.mock('@descope/access-key-management-widget', () => ({ default: {} }));
+jest.mock('@descope/audit-management-widget', () => ({ default: {} }));
 
 describe('Descope Widgets', () => {
 	beforeEach(() => {
@@ -64,6 +66,21 @@ describe('Descope Widgets', () => {
 		await waitFor(() =>
 			expect(
 				document.querySelector('descope-access-key-management-widget')
+			).toBeInTheDocument()
+		);
+	});
+
+	it('render AuditManagement', async () => {
+		render(
+			<AuthProvider projectId="project1">
+				<AuditManagement tenant="tenant1" widgetId="widget1" />
+			</AuthProvider>
+		);
+
+		// Wait for the web component to be in the document
+		await waitFor(() =>
+			expect(
+				document.querySelector('descope-audit-management-widget')
 			).toBeInTheDocument()
 		);
 	});
