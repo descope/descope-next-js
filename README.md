@@ -322,11 +322,21 @@ The widget lets you:
 
 ```js
 import { AccessKeyManagement } from '@descope/nextjs-sdk';
-...
-  <AccessKeyManagement
-    widgetId="access-key-management-widget"
-    tenant="tenant-id"
-  />
+{
+	/* admin view: manage all tenant users' access keys */
+}
+<AccessKeyManagement
+	widgetId="access-key-management-widget"
+	tenant="tenant-id"
+/>;
+
+{
+	/* user view: mange access key for the logged-in tenant's user */
+}
+<AccessKeyManagement
+	widgetId="user-access-key-management-widget"
+	tenant="tenant-id"
+/>;
 ```
 
 Example:
