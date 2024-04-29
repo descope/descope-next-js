@@ -360,6 +360,34 @@ import { AuditManagement } from '@descope/nextjs-sdk';
 Example:
 [Manage Audit](./examples/app-router/app/manage-audit/page.tsx)
 
+#### User Profile
+
+The `UserProfile` widget lets you embed a user profile component in your app and let the logged in user update his profile.
+
+The widget lets you:
+
+- Update user profile picture
+- Update user personal information
+- Update authentication methods
+- Logout
+
+###### Usage
+
+```js
+import { UserProfile } from '@descope/nextjs-sdk';
+...
+  <UserProfile
+    widgetId="user-profile-widget"
+    onLogout={() => {
+      // add here you own logout callback
+      window.location.href = '/login';
+    }}
+  />
+```
+
+Example:
+[User Profile](./examples/app-router/app/my-user-profile/page.tsx)
+
 ## Code Example
 
 You can find an example react app in the [examples folder](./examples). - [App Router](/examples/app-router/) - [Pages Router](/examples/pages-router/)

@@ -12,7 +12,7 @@ const Page = async () => {
 			<UserDetails />
 			<p>{!sessionRes ? 'User is not logged in' : 'User is logged in'}</p>
 			{
-				// show link to Manage Users, Roles, Audit, and Access Keys if user is logged in
+				// show link to Manage Users, Roles, Audit, User-Profile and Access Keys if user is logged in
 				true && (
 					<div>
 						<Link href="/manage-users">Manage Users</Link>
@@ -22,6 +22,8 @@ const Page = async () => {
 						<Link href="/manage-access-keys">Manage Access Keys</Link>
 						<br />
 						<Link href="/manage-audit">Manage Audit</Link>
+						<br />
+						<Link href="/user-profile">User Profile</Link>
 					</div>
 				)
 			}
