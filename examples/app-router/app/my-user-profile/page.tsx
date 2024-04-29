@@ -11,6 +11,11 @@ export default () => (
 		}}
 	>
 		<h1>User Profile</h1>
-		<UserProfile widgetId="user-profile-widget" />
+		<UserProfile
+			widgetId="user-profile-widget"
+			onLogout={() => {
+				window.location.href = '/login';
+			}}
+		/>
 	</div>
 );
