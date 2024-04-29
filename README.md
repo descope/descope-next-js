@@ -388,9 +388,6 @@ import { UserProfile } from '@descope/nextjs-sdk';
 Example:
 [User Profile](./examples/app-router/app/my-user-profile/page.tsx)
 
-[User Profile](./exa
-mples/app/MyUserProfile.tsx)
-
 ## Code Example
 
 You can find an example react app in the [examples folder](./examples). - [App Router](/examples/app-router/) - [Pages Router](/examples/pages-router/)
