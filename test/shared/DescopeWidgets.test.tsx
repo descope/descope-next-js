@@ -7,7 +7,8 @@ import {
 	UserManagement,
 	RoleManagement,
 	AccessKeyManagement,
-	AuditManagement
+	AuditManagement,
+	UserProfile
 } from '../../src/shared/DescopeWidgets';
 
 const mockPush = jest.fn();
@@ -19,6 +20,7 @@ jest.mock('@descope/user-management-widget', () => ({ default: {} }));
 jest.mock('@descope/role-management-widget', () => ({ default: {} }));
 jest.mock('@descope/access-key-management-widget', () => ({ default: {} }));
 jest.mock('@descope/audit-management-widget', () => ({ default: {} }));
+jest.mock('@descope/user-profile-widget', () => ({ default: {} }));
 
 describe('Descope Widgets', () => {
 	beforeEach(() => {
@@ -81,6 +83,21 @@ describe('Descope Widgets', () => {
 		await waitFor(() =>
 			expect(
 				document.querySelector('descope-audit-management-widget')
+			).toBeInTheDocument()
+		);
+	});
+
+	it('render UserProfile', async () => {
+		render(
+			<AuthProvider projectId="project1">
+				<UserProfile widgetId="widget1" />
+			</AuthProvider>
+		);
+
+		// Wait for the web component to be in the document
+		await waitFor(() =>
+			expect(
+				document.querySelector('descope-user-profile-widget')
 			).toBeInTheDocument()
 		);
 	});
