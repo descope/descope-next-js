@@ -360,7 +360,6 @@ import { AuditManagement } from '@descope/nextjs-sdk';
 Example:
 [Manage Audit](./examples/app-router/app/manage-audit/page.tsx)
 
-
 #### User Profile
 
 The `UserProfile` widget lets you embed a user profile component in your app and let the logged in user update his profile.
@@ -391,7 +390,6 @@ Example:
 
 [User Profile](./exa
 mples/app/MyUserProfile.tsx)
-
 
 ## Code Example
 
