@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { UserProfile } from '@descope/nextjs-sdk'; // eslint-disable-line
 
