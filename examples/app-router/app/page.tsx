@@ -23,7 +23,7 @@ const Page = async () => {
 						<br />
 						<Link href="/manage-audit">Manage Audit</Link>
 						<br />
-						<Link href="/user-profile">User Profile</Link>
+						<Link href="/my-user-profile">User Profile</Link>
 					</div>
 				)
 			}
