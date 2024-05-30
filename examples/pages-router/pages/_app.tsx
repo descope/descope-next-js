@@ -5,6 +5,7 @@ export default function App({ Component, pageProps }) {
 		<AuthProvider
 			projectId={process.env.NEXT_PUBLIC_DESCOPE_PROJECT_ID}
 			baseUrl={process.env.NEXT_PUBLIC_DESCOPE_BASE_URL}
+			baseStaticUrl={process.env.NEXT_PUBLIC_DESCOPE_BASE_STATIC_URL}
 		>
 			<Component {...pageProps} />
 		</AuthProvider>
