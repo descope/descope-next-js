@@ -77,10 +77,10 @@
 		"@descope/react-sdk": "2.0.37"
 	},
 	"devDependencies": {
-		"@babel/core": "7.23.9",
-		"@babel/preset-env": "7.23.9",
-		"@babel/preset-react": "7.23.3",
-		"@babel/preset-typescript": "7.23.3",
+		"@babel/core": "7.24.7",
+		"@babel/preset-env": "7.24.7",
+		"@babel/preset-react": "7.24.7",
+		"@babel/preset-typescript": "7.24.7",
 		"@open-wc/rollup-plugin-html": "^1.2.5",
 		"@rollup/plugin-commonjs": "^25.0.7",
 		"@rollup/plugin-node-resolve": "^15.2.3",
