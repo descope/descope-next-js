@@ -3,7 +3,7 @@
 The Descope SDK for NextJS provides convenient access to the Descope for an application written on top of NextJS. You can read more on the [Descope Website](https://descope.com).
 
 This SDK uses under the hood the Descope React SDK and Descope Node SDK
-Refer to the [Descope React SDK](https://github.com/descope/react-sdk) and [Descope Node SDK](https://github.com/descope/node-sdk) for more details.
+Refer to the [Descope React SDK](https://github.com/descope/descope-js/tree/main/packages/sdks/react-sdk) and [Descope Node SDK](https://github.com/descope/node-sdk) for more details.
 
 ## Requirements
 
