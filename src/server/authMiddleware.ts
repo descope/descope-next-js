@@ -25,6 +25,10 @@ type MiddlewareOptions = {
 	// - process.env.SIGN_IN_ROUTE or /sign-in if not provided
 	// - process.env.SIGN_UP_ROUTE or /sign-up if not provided
 	publicRoutes?: string[];
+
+	// An array of private routes that require authentication
+	// If privateRoutes is defined, routes not listed in this array will default to public routes
+	privateRoutes?: string[];
 };
 
 const getSessionJwt = (req: NextRequest): string | undefined => {
@@ -45,8 +49,9 @@ const isPublicRoute = (req: NextRequest, options: MiddlewareOptions) => {
 		req.nextUrl.pathname
 	);
 	const isPublic = options.publicRoutes?.includes(req.nextUrl.pathname);
+	const isPrivate = options.privateRoutes?.includes(req.nextUrl.pathname);
 
-	return isDefaultPublicRoute || isPublic;
+	return isDefaultPublicRoute || isPublic || !isPrivate;
 };
 
 const addSessionToHeadersIfExists = (
