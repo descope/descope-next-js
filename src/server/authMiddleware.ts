@@ -54,9 +54,20 @@ const isPublicRoute = (req: NextRequest, options: MiddlewareOptions) => {
 		req.nextUrl.pathname
 	);
 	const isPublic = options.publicRoutes?.includes(req.nextUrl.pathname);
-	const isPrivate = options.privateRoutes?.includes(req.nextUrl.pathname);
 
-	return isDefaultPublicRoute || isPublic || !isPrivate;
+	// If both publicRoutes and privateRoutes are provided, we prioritize publicRoutes
+	if (options.publicRoutes && options.privateRoutes) {
+		return isDefaultPublicRoute || isPublic;
+	}
+
+	// If only publicRoutes are provided
+	if (options.publicRoutes) {
+		return isDefaultPublicRoute || isPublic;
+	}
+
+	// If only privateRoutes are provided
+	const isPrivate = options.privateRoutes?.includes(req.nextUrl.pathname);
+	return isDefaultPublicRoute || !isPrivate;
 };
 
 const addSessionToHeadersIfExists = (
@@ -83,9 +94,10 @@ const createAuthMiddleware =
 		console.debug('Auth middleware starts');
 
 		if (options.publicRoutes && options.privateRoutes) {
-			throw new Error(
-				'You can only define either publicRoutes or privateRoutes, not both.'
+			console.warn(
+				'Both publicRoutes and privateRoutes are defined. Ignoring privateRoutes.'
 			);
+			options.privateRoutes = undefined;
 		}
 
 		const jwt = getSessionJwt(req);
