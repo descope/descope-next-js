@@ -19,17 +19,22 @@ type MiddlewareOptions = {
 	// Defaults to process.env.SIGN_IN_ROUTE or '/sign-in' if not provided
 	// NOTE: In case it contains query parameters that exist in the original URL, they will override the original query parameters. e.g. if the original URL is /page?param1=1&param2=2 and the redirect URL is /sign-in?param1=3, the final redirect URL will be /sign-in?param1=3&param2=2
 	redirectUrl?: string;
-
-	// An array of public routes that do not require authentication
-	// In addition to the default public routes:
-	// - process.env.SIGN_IN_ROUTE or /sign-in if not provided
-	// - process.env.SIGN_UP_ROUTE or /sign-up if not provided
-	publicRoutes?: string[];
-
-	// An array of private routes that require authentication
-	// If privateRoutes is defined, routes not listed in this array will default to public routes
-	privateRoutes?: string[];
-};
+} & (
+	| {
+			// An array of public routes that do not require authentication
+			// In addition to the default public routes:
+			// - process.env.SIGN_IN_ROUTE or /sign-in if not provided
+			// - process.env.SIGN_UP_ROUTE or /sign-up if not provided
+			publicRoutes?: string[];
+			privateRoutes?: never;
+	  }
+	| {
+			publicRoutes?: never;
+			// An array of private routes that require authentication
+			// If privateRoutes is defined, routes not listed in this array will default to public routes
+			privateRoutes?: string[];
+	  }
+);
 
 const getSessionJwt = (req: NextRequest): string | undefined => {
 	let jwt = req.headers?.get('Authorization')?.split(' ')[1];
