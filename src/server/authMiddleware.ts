@@ -82,6 +82,12 @@ const createAuthMiddleware =
 	async (req: NextRequest) => {
 		console.debug('Auth middleware starts');
 
+		if (options.publicRoutes && options.privateRoutes) {
+			throw new Error(
+				'You can only define either publicRoutes or privateRoutes, not both.'
+			);
+		}
+
 		const jwt = getSessionJwt(req);
 
 		// check if the user is authenticated
