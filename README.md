@@ -148,7 +148,7 @@ export default authMiddleware({
 	redirectUrl?: string,
 
 	// An array of public routes that do not require authentication
-	// All routes are private by default, this is where you will defined which routes are public.
+	// All routes are private by default, use this to configure routes that don't require authentication
 	// In addition to the default public routes:
 	// - process.env.SIGN_IN_ROUTE or /sign-in if not provided
 	// - process.env.SIGN_UP_ROUTE or /sign-up if not provided
