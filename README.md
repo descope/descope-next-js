@@ -155,7 +155,7 @@ export default authMiddleware({
 	publicRoutes?: string[],
 
 	// An array of private routes that require authentication
-	// If this is defined, then the default behavior of all routes being private will be changed, and all routes will be public by default. Private routes will therefore have to be controlled by this array
+	// If defined, the specified route will require authentication and the rest of the routes be will be public
 	privateRoutes?: string[],
 
 	// If you having privateRoutes and publicRoutes defined at the same time, privateRoutes will be ignored.
