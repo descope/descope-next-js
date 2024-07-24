@@ -93,7 +93,7 @@ const createAuthMiddleware =
 	async (req: NextRequest) => {
 		console.debug('Auth middleware starts');
 
-		if (options.publicRoutes && options.privateRoutes) {
+		if (options.publicRoutes?.length > 0 && options.privateRoutes?.length > 0) {
 			console.warn(
 				'Both publicRoutes and privateRoutes are defined. Ignoring privateRoutes.'
 			);
