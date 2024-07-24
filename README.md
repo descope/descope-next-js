@@ -158,7 +158,7 @@ export default authMiddleware({
 	// If this is defined, then the default behavior of all routes being private will be changed, and all routes will be public by default. Private routes will therefore have to be controlled by this array
 	privateRoutes?: string[],
 
-	// If you having privateRoutes and publicRoutes defined at the same time, privateRoutes by default will be ignored.
+	// If you having privateRoutes and publicRoutes defined at the same time, privateRoutes will be ignored.
 })
 
 export const config = {
