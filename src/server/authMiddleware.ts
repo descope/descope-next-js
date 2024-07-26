@@ -53,21 +53,23 @@ const isPublicRoute = (req: NextRequest, options: MiddlewareOptions) => {
 	const isDefaultPublicRoute = Object.values(DEFAULT_PUBLIC_ROUTES).includes(
 		req.nextUrl.pathname
 	);
-	const isPublic = options.publicRoutes?.includes(req.nextUrl.pathname);
 
-	// If both publicRoutes and privateRoutes are provided, we prioritize publicRoutes
-	if (options.publicRoutes && options.privateRoutes) {
-		return isDefaultPublicRoute || isPublic;
+	if (options.publicRoutes && options.publicRoutes.length > 0) {
+		return (
+			isDefaultPublicRoute ||
+			options.publicRoutes.includes(req.nextUrl.pathname)
+		);
 	}
 
-	// If only publicRoutes are provided
-	if (options.publicRoutes) {
-		return isDefaultPublicRoute || isPublic;
+	if (options.privateRoutes && options.privateRoutes.length > 0) {
+		return (
+			isDefaultPublicRoute ||
+			!options.privateRoutes.includes(req.nextUrl.pathname)
+		);
 	}
 
-	// If only privateRoutes are provided
-	const isPrivate = options.privateRoutes?.includes(req.nextUrl.pathname);
-	return isDefaultPublicRoute || !isPrivate;
+	// If no routes are provided, all routes are public
+	return isDefaultPublicRoute;
 };
 
 const addSessionToHeadersIfExists = (
@@ -93,12 +95,17 @@ const createAuthMiddleware =
 	async (req: NextRequest) => {
 		console.debug('Auth middleware starts');
 
-		if (options.publicRoutes?.length > 0 && options.privateRoutes?.length > 0) {
+		const { publicRoutes, privateRoutes, ...restOptions } = options;
+		if (publicRoutes && privateRoutes) {
 			console.warn(
 				'Both publicRoutes and privateRoutes are defined. Ignoring privateRoutes.'
 			);
-			options.privateRoutes = undefined;
 		}
+
+		const effectiveOptions = {
+			...restOptions,
+			publicRoutes: publicRoutes && privateRoutes ? publicRoutes : publicRoutes
+		};
 
 		const jwt = getSessionJwt(req);
 
@@ -106,13 +113,14 @@ const createAuthMiddleware =
 		let session: AuthenticationInfo | undefined;
 		try {
 			session = await getGlobalSdk({
-				projectId: options.projectId,
-				baseUrl: options.baseUrl
+				projectId: effectiveOptions.projectId,
+				baseUrl: effectiveOptions.baseUrl
 			}).validateJwt(jwt);
 		} catch (err) {
 			console.debug('Auth middleware, Failed to validate JWT', err);
-			if (!isPublicRoute(req, options)) {
-				const redirectUrl = options.redirectUrl || DEFAULT_PUBLIC_ROUTES.signIn;
+			if (!isPublicRoute(req, effectiveOptions)) {
+				const redirectUrl =
+					effectiveOptions.redirectUrl || DEFAULT_PUBLIC_ROUTES.signIn;
 				const url = req.nextUrl.clone();
 				// Create a URL object for redirectUrl. 'http://example.com' is just a placeholder.
 				const parsedRedirectUrl = new URL(redirectUrl, 'http://example.com');
