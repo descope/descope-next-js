@@ -19,22 +19,17 @@ type MiddlewareOptions = {
 	// Defaults to process.env.SIGN_IN_ROUTE or '/sign-in' if not provided
 	// NOTE: In case it contains query parameters that exist in the original URL, they will override the original query parameters. e.g. if the original URL is /page?param1=1&param2=2 and the redirect URL is /sign-in?param1=3, the final redirect URL will be /sign-in?param1=3&param2=2
 	redirectUrl?: string;
-} & (
-	| {
-			// An array of public routes that do not require authentication
-			// In addition to the default public routes:
-			// - process.env.SIGN_IN_ROUTE or /sign-in if not provided
-			// - process.env.SIGN_UP_ROUTE or /sign-up if not provided
-			publicRoutes?: string[];
-			privateRoutes?: never;
-	  }
-	| {
-			publicRoutes?: never;
-			// An array of private routes that require authentication
-			// If privateRoutes is defined, routes not listed in this array will default to public routes
-			privateRoutes?: string[];
-	  }
-);
+
+	// An array of public routes that do not require authentication
+	// In addition to the default public routes:
+	// - process.env.SIGN_IN_ROUTE or /sign-in if not provided
+	// - process.env.SIGN_UP_ROUTE or /sign-up if not provided
+	publicRoutes?: string[];
+
+	// An array of private routes that require authentication
+	// If privateRoutes is defined, routes not listed in this array will default to public routes
+	privateRoutes?: string[];
+};
 
 const getSessionJwt = (req: NextRequest): string | undefined => {
 	let jwt = req.headers?.get('Authorization')?.split(' ')[1];
@@ -49,26 +44,33 @@ const getSessionJwt = (req: NextRequest): string | undefined => {
 	return undefined;
 };
 
-const isPublicRoute = (req: NextRequest, options: MiddlewareOptions) => {
+const isPublicRoute = (
+	req: NextRequest,
+	publicRoutes: string[] = [],
+	privateRoutes: string[] = []
+) => {
 	const isDefaultPublicRoute = Object.values(DEFAULT_PUBLIC_ROUTES).includes(
 		req.nextUrl.pathname
 	);
 
-	if (options.publicRoutes && options.publicRoutes.length > 0) {
+	if (publicRoutes.length > 0 && privateRoutes.length > 0) {
+		console.warn(
+			'Both publicRoutes and privateRoutes are defined. Ignoring privateRoutes.'
+		);
+		return isDefaultPublicRoute || publicRoutes.includes(req.nextUrl.pathname);
+	}
+
+	if (publicRoutes.length > 0) {
+		return isDefaultPublicRoute || publicRoutes.includes(req.nextUrl.pathname);
+	}
+
+	if (privateRoutes.length > 0) {
 		return (
-			isDefaultPublicRoute ||
-			options.publicRoutes.includes(req.nextUrl.pathname)
+			isDefaultPublicRoute || !privateRoutes.includes(req.nextUrl.pathname)
 		);
 	}
 
-	if (options.privateRoutes && options.privateRoutes.length > 0) {
-		return (
-			isDefaultPublicRoute ||
-			!options.privateRoutes.includes(req.nextUrl.pathname)
-		);
-	}
-
-	// If no routes are provided, all routes are public
+	// If no routes are provided, all routes are private
 	return isDefaultPublicRoute;
 };
 
@@ -95,32 +97,19 @@ const createAuthMiddleware =
 	async (req: NextRequest) => {
 		console.debug('Auth middleware starts');
 
-		const { publicRoutes, privateRoutes, ...restOptions } = options;
-		if (publicRoutes && privateRoutes) {
-			console.warn(
-				'Both publicRoutes and privateRoutes are defined. Ignoring privateRoutes.'
-			);
-		}
-
-		const effectiveOptions = {
-			...restOptions,
-			publicRoutes: publicRoutes && privateRoutes ? publicRoutes : publicRoutes
-		};
-
 		const jwt = getSessionJwt(req);
 
 		// check if the user is authenticated
 		let session: AuthenticationInfo | undefined;
 		try {
 			session = await getGlobalSdk({
-				projectId: effectiveOptions.projectId,
-				baseUrl: effectiveOptions.baseUrl
+				projectId: options.projectId,
+				baseUrl: options.baseUrl
 			}).validateJwt(jwt);
 		} catch (err) {
 			console.debug('Auth middleware, Failed to validate JWT', err);
-			if (!isPublicRoute(req, effectiveOptions)) {
-				const redirectUrl =
-					effectiveOptions.redirectUrl || DEFAULT_PUBLIC_ROUTES.signIn;
+			if (!isPublicRoute(req, options.publicRoutes, options.privateRoutes)) {
+				const redirectUrl = options.redirectUrl || DEFAULT_PUBLIC_ROUTES.signIn;
 				const url = req.nextUrl.clone();
 				// Create a URL object for redirectUrl. 'http://example.com' is just a placeholder.
 				const parsedRedirectUrl = new URL(redirectUrl, 'http://example.com');
