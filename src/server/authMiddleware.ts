@@ -54,7 +54,7 @@ const isPublicRoute = (req: NextRequest, options: MiddlewareOptions) => {
 		req.nextUrl.pathname
 	);
 
-	if (options.publicRoutes && options.publicRoutes.length > 0) {
+	if (options.publicRoutes?.length > 0) {
 		return (
 			isDefaultPublicRoute ||
 			options.publicRoutes.includes(req.nextUrl.pathname)
