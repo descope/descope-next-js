@@ -1,3 +1,9 @@
+# IMPORTANT NOTE: This repository is _DEPRECATED_.
+
+Descope Nextjs SDK has been moved to the [descope-js](https://github.com/descope/descope-js/tree/main/packages/sdks/nextjs-sdk) repoistory.
+
+---
+
 # Descope SDK for NextJS
 
 The Descope SDK for NextJS provides convenient access to the Descope for an application written on top of NextJS. You can read more on the [Descope Website](https://descope.com).
