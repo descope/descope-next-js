@@ -25,6 +25,10 @@ type MiddlewareOptions = {
 	// - process.env.SIGN_IN_ROUTE or /sign-in if not provided
 	// - process.env.SIGN_UP_ROUTE or /sign-up if not provided
 	publicRoutes?: string[];
+
+	// An array of private routes that require authentication
+	// If privateRoutes is defined, routes not listed in this array will default to public routes
+	privateRoutes?: string[];
 };
 
 const getSessionJwt = (req: NextRequest): string | undefined => {
@@ -40,13 +44,34 @@ const getSessionJwt = (req: NextRequest): string | undefined => {
 	return undefined;
 };
 
-const isPublicRoute = (req: NextRequest, options: MiddlewareOptions) => {
+const isPublicRoute = (
+	req: NextRequest,
+	publicRoutes: string[] = [],
+	privateRoutes: string[] = []
+) => {
 	const isDefaultPublicRoute = Object.values(DEFAULT_PUBLIC_ROUTES).includes(
 		req.nextUrl.pathname
 	);
-	const isPublic = options.publicRoutes?.includes(req.nextUrl.pathname);
 
-	return isDefaultPublicRoute || isPublic;
+	if (publicRoutes.length > 0 && privateRoutes.length > 0) {
+		console.warn(
+			'Both publicRoutes and privateRoutes are defined. Ignoring privateRoutes.'
+		);
+		return isDefaultPublicRoute || publicRoutes.includes(req.nextUrl.pathname);
+	}
+
+	if (publicRoutes.length > 0) {
+		return isDefaultPublicRoute || publicRoutes.includes(req.nextUrl.pathname);
+	}
+
+	if (privateRoutes.length > 0) {
+		return (
+			isDefaultPublicRoute || !privateRoutes.includes(req.nextUrl.pathname)
+		);
+	}
+
+	// If no routes are provided, all routes are private
+	return isDefaultPublicRoute;
 };
 
 const addSessionToHeadersIfExists = (
@@ -83,7 +108,7 @@ const createAuthMiddleware =
 			}).validateJwt(jwt);
 		} catch (err) {
 			console.debug('Auth middleware, Failed to validate JWT', err);
-			if (!isPublicRoute(req, options)) {
+			if (!isPublicRoute(req, options.publicRoutes, options.privateRoutes)) {
 				const redirectUrl = options.redirectUrl || DEFAULT_PUBLIC_ROUTES.signIn;
 				const url = req.nextUrl.clone();
 				// Create a URL object for redirectUrl. 'http://example.com' is just a placeholder.
