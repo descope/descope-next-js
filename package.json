@@ -74,7 +74,7 @@
 	},
 	"dependencies": {
 		"@descope/node-sdk": "1.6.9",
-		"@descope/react-sdk": "2.0.56"
+		"@descope/react-sdk": "2.0.59"
 	},
 	"devDependencies": {
 		"@babel/core": "7.23.9",
